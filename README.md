@@ -59,46 +59,40 @@ int getTotalPrice() {
 }
 
 ---
-## **💸 2. Perbedaan Diskon: Per Item vs. Total Transaksi**
+
+## 💸 2. Perbedaan Diskon: Per Item vs. Total Transaksi
 
 Aplikasi ini mengimplementasikan dua jenis diskon yang dapat digabungkan, yang diatur secara terpusat oleh **Cubit** untuk konsistensi perhitungan.
 
-### **⭐ Diskon Per Item**
+### ⭐ 1. Diskon Per Item
 
 Diskon ini diterapkan pada setiap produk secara individual, **sebelum** subtotal dihitung.
 
-* **Contoh:** Ayam Geprek diskon 10% atau Es Teh potongan Rp 2.000.
-* **Digunakan Saat:** Promo per menu atau per produk.
+* **Penerapan:** Besaran diskon dapat berbeda per barang.
+* **Waktu Hitung:** Dihitung saat harga item dikalikan kuantitas ($Harga Akhir = Harga Setelah Diskon \times Quantity$).
+* **Contoh Aplikasi:** Saat item "Latte" dipilih, sistem otomatis mengurangi 10% dari harga aslinya.
 
-### **⭐ Diskon Total Transaksi**
+### ⭐ 2. Diskon Total Transaksi
 
 Diskon ini diterapkan **setelah** total harga subtotal dihitung.
 
-* **Contoh:** Total pembelian > Rp 100.000 → diskon 10%.
-* **Digunakan Saat:** Promo global (per toko) atau diskon member.
+* **Penerapan:** Diskon berlaku global (per toko) atau sebagai diskon member.
+* **Waktu Hitung:** Dihitung setelah total keseluruhan belanja.
+* **Contoh Aplikasi:** Total pembelian > Rp 100.000 → diskon 10%.
 
-### **Ringkasan Perhitungan**
-
-| Fitur | Diskon Per Item | Diskon Total |
-| :--- | :--- | :--- |
-| **Berlaku untuk** | Per menu/produk | Total keseluruhan belanja |
-| **Waktu Hitung** | Dihitung **sebelum** total | Dihitung **setelah** total |
-
----
-
-## **🧱 3. Manfaat Widget Stack untuk Tampilan Kategori Menu**
+## 🧱 3. Manfaat Widget Stack untuk Tampilan Kategori Menu
 
 Widget **Stack** digunakan untuk menumpuk beberapa elemen dalam satu area, ideal untuk membuat tampilan kategori menu yang **dinamis dan modern**.
 
-### **✔ Elemen Bisa Ditumpuk (Layering)**
+### ✔ Elemen Bisa Ditumpuk (Layering)
 
 Memungkinkan penumpukan Gambar background kategori, **Teks kategori**, **Badge promo**, atau Indikator jumlah item dalam satu tampilan.
 
-### **✔ UI Lebih Menarik**
+### ✔ UI Lebih Menarik
 
 Cocok untuk menampilkan notifikasi kecil (*Promo 20%*, *Best Seller*) dan menciptakan tampilan **card** yang bergaya aplikasi komersial.
 
-### **Contoh Kode Widget Stack (Category Indicator)**
+### Contoh Kode Widget Stack (Category Indicator)
 
 Stack memungkinkan pembuatan garis indikator aktif yang dapat bergerak di bawah teks kategori:
 
@@ -117,8 +111,6 @@ Stack(
     )
   ],
 )
-
-
 
 
 
