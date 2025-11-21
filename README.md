@@ -31,143 +31,182 @@ For help getting started with Flutter development, view the
 samples, guidance on mobile development, and a full API reference.
 
 
-# 📱 UTS Pemrograman Mobile 2  
-## Flutter + Cubit — Aplikasi Kasir & Sistem Diskon  
-*Nama:* Arika Azhar  
-*NIM:* 23552011408  
+📱 UTS Pemrograman Mobile 2 – Aplikasi Kasir Flutter
 
----
+Nama: Arika Azhar
+NIM: 23552011408
 
-## 📌 Deskripsi Project  
-Project ini adalah aplikasi kasir berbasis Flutter yang menggunakan *State Management Cubit* untuk mengelola keranjang belanja, menu makanan, harga produk, dan sistem diskon dinamis.  
-Aplikasi ini dibuat sebagai tugas UTS Pemrograman Mobile 2.
+📝 Deskripsi Project
 
----
+Aplikasi ini merupakan proyek UTS Pemrograman Mobile 2 yang dibuat menggunakan Flutter dan State Management Cubit.
+Aplikasi ini memiliki fitur:
 
-## 🧠 1. Manfaat State Management Cubit dalam Logika Diskon Dinamis  
+Manajemen menu & kategori
 
-State management menggunakan *Cubit* sangat berguna dalam aplikasi kasir karena mampu mengelola data transaksi yang cepat berubah, seperti jumlah item, total harga, hingga diskon.
+Keranjang belanja
 
-### ✔ Mengelola Data Secara Konsisten  
-Setiap perubahan:
-- menambah item  
-- mengurangi jumlah  
-- menghapus item  
-- menghitung ulang total  
+Sistem diskon per item
 
-…semuanya dilakukan melalui Cubit sehingga state selalu akurat dan UI mengikuti secara otomatis.
+Sistem diskon total transaksi
 
-### ✔ Memusatkan Logika Diskon  
-Diskon dapat dihitung dengan mudah di dalam Cubit, contohnya:
+Tampilan kategori menggunakan widget Stack
 
-```dart
+Perhitungan harga secara otomatis
+
+🔧 1. Bagaimana State Management Cubit Membantu Logika Diskon Dinamis?
+
+State management menggunakan Cubit sangat cocok untuk aplikasi kasir karena transaksi selalu berubah (tambah item, ubah qty, hapus item).
+
+✔ Mengelola Perubahan Secara Real-Time
+
+Setiap kali pengguna menambahkan atau mengubah jumlah item, Cubit langsung:
+
+meng-update state,
+
+menghitung total ulang,
+
+menghitung diskon ulang.
+
+UI akan menyesuaikan otomatis tanpa harus mengatur ulang secara manual.
+
+✔ Logika Diskon Lebih Rapi dan Terpusat
+
+Cubit menyimpan semua logika diskon dalam satu file.
+Ini membuat kode lebih mudah dibaca, terstruktur, dan minim bug.
+
+📌 Contoh Logika Diskon di OrderCubit
 int getTotalPrice() {
   int total = 0;
-  for (var m in state) {
-    total += m.getDiscountedPrice() * m.qty;
+
+  // Hitung diskon per item
+  for (var item in state) {
+    total += item.getDiscountedPrice() * item.qty;
   }
-  if (total > 100000) total = (total * 0.9).toInt();
+
+  // Diskon total transaksi
+  if (total > 100000) {
+    total = (total * 0.9).toInt(); // diskon 10%
+  }
+
   return total;
 }
-Cubit membuat logika diskon tidak bercampur dengan UI → lebih bersih dan mudah di-maintain.
 
-✔ Minim Bug
-Karena semua perhitungan dilakukan di satu tempat, risiko salah total atau salah diskon sangat kecil.
 
-✔ Memisahkan Logika Bisnis & UI
-UI → hanya menampilkan data
-Cubit → menghitung dan mengelola transaksi
-
-Ini adalah prinsip "clean architecture".
+Dengan ini, UI tidak perlu tahu cara menghitung diskon → cukup panggil getTotalPrice().
 
 💸 2. Perbedaan Diskon Per Item dan Diskon Total Transaksi
 ⭐ Diskon Per Item
-Diskon diterapkan pada setiap produk secara individu.
+
+Diskon diberikan langsung pada menu tertentu.
 Contoh:
 
-Ayam Geprek diskon 10%
+Nasi Goreng diskon 10%
 
-Es Teh potongan Rp 2.000
+Es Teh potongan 2.000
 
-Digunakan untuk promo per menu.
+Diskon ini dihitung sebelum masuk total transaksi.
+
+Contoh kode:
+int getDiscountedPrice() {
+  return price - discount;
+}
 
 ⭐ Diskon Total Transaksi
-Diterapkan setelah total harga dihitung.
+
+Diskon diberikan setelah total harga barang dijumlahkan.
 Contoh:
 
-Total pembelian > 100.000 → diskon 10%
+Total belanja > 100.000 → diskon 10%
 
-Promo akhir bulan: total diskon 5%
+Promo akhir bulan → diskon 5%
 
-📌 Ringkasan
-Diskon Per Item	Diskon Total
-Berlaku per menu	Berlaku untuk total keseluruhan
-Biasanya promo per produk	Promo global (per toko)
-Dihitung sebelum total	Dihitung setelah total
+Contoh kode:
+if (total > 100000) {
+  total = (total * 0.9).toInt();
+}
 
-Aplikasi kasir modern biasanya menggunakan keduanya sekaligus.
+📊 Tabel Ringkasan
+Jenis Diskon	Berlaku Pada	Contoh	Waktu Penghitungan
+Diskon Per Item	per produk	Ayam Geprek 10%	sebelum total
+Diskon Total	total belanja	total > 100.000 → 10%	setelah total
+🎨 3. Manfaat Widget Stack pada Tampilan Kategori Menu
 
-🧱 3. Manfaat Widget Stack untuk Tampilan Kategori Menu
-Widget Stack digunakan untuk menumpuk beberapa elemen dalam satu area.
+Widget Stack digunakan untuk menumpuk widget sehingga tampilan UI kategori lebih menarik dan modern.
 
-✔ Elemen Bisa Ditumpuk
-Cocok untuk:
+✔ Menempatkan Elemen Secara Bebas
 
-Gambar background kategori
+Dengan Positioned, elemen dapat diletakkan di:
 
-Teks kategori
+kiri atas,
 
-Badge promo
+kanan bawah,
 
-Indikator jumlah item
+tengah overlay, dll.
 
-✔ Penempatan Fleksibel
-Dengan Positioned, elemen bisa ditempatkan:
+✔ Membuat UI Lebih Menarik
 
-kiri atas
+Stack sangat cocok digunakan untuk:
 
-kanan bawah
+background kategori
 
-tengah overlay
+teks kategori
 
-✔ Cocok untuk Notifikasi Kecil
-Seperti:
+badge promo (contoh: “20% OFF”)
 
-Promo 20%
+ikon kecil
 
-Best Seller
-
-Stok habis
-
-✔ UI Lebih Menarik
-Stack memungkinkan tampilan bergaya kartu (card) seperti aplikasi komersial.
-
-🛠 Teknologi yang Digunakan
-Flutter 3.x
-
-Dart
-
-Flutter Bloc (Cubit)
-
-Material Design Components
-
-Widget Flutter: Stack, GridView, ListView, Card
+📌 Contoh Stack
+Stack(
+  children: [
+    Image.asset("assets/foods.png"),
+    Positioned(
+      bottom: 8,
+      left: 10,
+      child: Text("Makanan", 
+        style: TextStyle(fontSize: 18, color: Colors.white),
+      ),
+    ),
+    Positioned(
+      top: 8,
+      right: 8,
+      child: Container(
+        padding: EdgeInsets.all(6),
+        decoration: BoxDecoration(
+          color: Colors.red,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Text("Promo 20%", style: TextStyle(color: Colors.white)),
+      ),
+    ),
+  ],
+);
 
 📁 Struktur Project
-css
-Copy code
 lib/
- ├── cubit/
+ ├── blocs/
  │    └── order_cubit.dart
  │    └── category_cubit.dart
-
  ├── models/
  │    └── menu_model.dart
  ├── pages/
  │    ├── home_page.dart
- │    └── cart_page.dart
+ │    ├── cart_page.dart
+ │    ├── order_summary_page.dart
  │    └── category_stack_page.dart
-
  ├── widgets/
  │    └── menu_card.dart
- └── main.dart
+ └── main.dart
+
+🚀 Cara Menjalankan Project
+flutter pub get
+flutter run
+
+🎯 Kesimpulan
+
+Cubit membantu mengatur transaksi dan diskon dengan lebih bersih & efisien.
+
+Diskon per item dan diskon total transaksi memiliki fungsi berbeda namun saling melengkapi.
+
+Widget Stack membuat tampilan kategori lebih estetik dan fleksibel.
+
+
