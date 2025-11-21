@@ -1,8 +1,9 @@
-📱 UTS Pemrograman Mobile 2
-Flutter + Cubit — Aplikasi Kasir & Sistem Diskon
+ ## 💳 UTS Pemrograman Mobile 2 – Aplikasi Kasir Flutter + Cubit
+    Sistem Diskon Dinamis, Menu Makanan & Minuman, Keranjang Belanja
 
-Nama: Arika Azhar
-NIM: 23552011408
+     Nama: Arika Azhar
+     NIM: 23552011408
+
 
 
 This project is a starting point for a Flutter application.
@@ -16,192 +17,150 @@ For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
+📘 Deskripsi Project
 
-)
-
-📱 UTS Pemrograman Mobile 2
-Aplikasi Kasir Flutter + Cubit — Sistem Diskon Dinamis
-
-Nama: Arika Azhar
-NIM: 23552011408
-
-🚀 Tentang Project
-
-Aplikasi ini merupakan aplikasi kasir sederhana berbasis Flutter dengan State Management Cubit untuk mengelola:
+Aplikasi ini merupakan aplikasi kasir sederhana berbasis Flutter, yang menggunakan State Management Cubit untuk mengelola:
 
 Menu makanan & minuman
 
 Keranjang belanja
 
-Harga & quantity
+Perhitungan subtotal
 
-Diskon per item
+Diskon per item & diskon total
 
-Diskon total transaksi
+Logika diskon dinamis
 
-Ringkasan transaksi
+Update UI secara realtime
 
-Aplikasi ini dibuat sebagai tugas UTS Pemrograman Mobile 2.
+Tujuan aplikasi ini adalah untuk menampilkan bagaimana Cubit mengatur seluruh data transaksi, sehingga proses perhitungan menjadi lebih rapi, terstruktur, dan mudah dikembangkan.
 
-📸 Tampilan Aplikasi (Screenshots)
-🧾 Ringkasan Pesanan (Contoh 1)
+🧠 Manfaat Cubit dalam Logika Diskon Dinamis
 
-![ui1](/mnt/data/ringkasan pemesanan makanan.png)
+State management Cubit membantu mengelola transaksi yang memiliki diskon dinamis melalui:
 
-🧾 Ringkasan Pesanan (Contoh 2)
+✔ 1. Pemisahan Logika & UI
 
-![ui2](/mnt/data/ringkasan pemesanan.png)
+Seluruh logika perhitungan subtotal, diskon, dan total berada di Cubit, sehingga UI bersih dan mudah dipelihara.
 
-🍹 Menu Minuman
+✔ 2. Update UI Secara Realtime
 
-🍛 Menu Makanan
+Saat item ditambah/hapus, Cubit mengirim state baru sehingga UI langsung berubah otomatis.
 
-🧠 1. Manfaat Cubit dalam Logika Diskon Dinamis
+✔ 3. Perhitungan Diskon Mudah Diubah
 
-Cubit membantu mengelola data transaksi yang selalu berubah seperti:
+Jika syarat diskon berubah, cukup ubah di Cubit tanpa menyentuh UI.
 
-Qty item
+✔ 4. Mencegah Perhitungan Ganda
 
-Harga setelah diskon
+Semua perhitungan terpusat → tidak ada selisih angka di halaman lain.
 
-Total transaksi
+🔍 Contoh Logika Diskon Dinamis di Cubit
+double get subtotal {
+  return cart.fold(0, (sum, item) => sum + item.finalPrice);
+}
 
-Subtotal
-
-✔ Konsistensi Data
-
-Semua perubahan dilakukan di Cubit → UI otomatis ter-update.
-
-✔ Logika Diskon Terpusat
-
-Tidak bercampur dengan UI → lebih bersih & minim bug.
-
-📌 Contoh Logika Diskon Total
-int getTotalPrice() {
-  int total = 0;
-
-  for (var m in state) {
-    total += m.getDiscountedPrice() * m.qty;
+double get total {
+  if (subtotal > 100000) {
+    return subtotal * 0.9; // Diskon 10%
   }
+  return subtotal;
+}
 
-  if (total > 100000) {
-    total = (total * 0.9).toInt(); // Diskon 10%
+💸 Perbedaan Diskon Per Item dan Diskon Total Transaksi
+Jenis Diskon	Penjelasan	Contoh	Digunakan Saat
+Diskon Per Item	Diskon diterapkan di produk tertentu sebelum subtotal dihitung.	Kopi Rp20.000 → diskon 10% → Rp18.000	Promo barang tertentu
+Diskon Total Transaksi	Diskon diberikan berdasarkan total belanja.	Subtotal Rp120.000 → diskon 10%	Diskon member, minimal pembelian
+📌 Contoh Implementasi
+Diskon per Item (per-produk)
+class Item {
+  final String name;
+  final double price;
+  final double discount; // contoh: 0.1 = 10%
+
+  Item({required this.name, required this.price, this.discount = 0});
+
+  double get finalPrice => price - (price * discount);
+}
+
+Diskon Total Transaksi (foreach transaksi)
+double get total {
+  if (subtotal > 100000) {
+    return subtotal * 0.9; // potong 10%
   }
-
-  return total;
+  return subtotal;
 }
 
-💸 2. Perbedaan Diskon Per Item & Diskon Total
-⭐ Diskon Per Item
+🧩 Manfaat Penggunaan Widget Stack pada Tampilan Kategori Menu
 
-Diterapkan pada produk tertentu.
-Contoh:
+Widget Stack memberikan kelebihan untuk tampilan kategori seperti tab menu.
 
-Ayam Geprek → diskon 10%
+✔ 1. Menumpuk Widget (Layering)
 
-Es Teh → potongan Rp 2.000
+Membuat tampilan garis bawah aktif di belakang teks kategori.
 
-int getDiscountedPrice() {
-  return price - discount;
-}
+✔ 2. Lebih Fleksibel untuk Desain Modern
 
-⭐ Diskon Total
+Dapat menambah highlight, bayangan, atau indikator tanpa mengubah layout utama.
 
-Diterapkan setelah subtotal dihitung.
-Contoh:
+✔ 3. Cocok untuk Animasi Category Indicator
 
-if (total > 100000) {
-  total = (total * 0.9).toInt(); // Diskon 10%
-}
+Garis indikator dapat digerakkan dari kategori "Makanan" ke "Minuman".
 
-📊 Ringkasan
-Diskon Per Item	Diskon Total
-Berlaku per menu	Berlaku untuk seluruh belanja
-Diterapkan sebelum total	Setelah total
-Cocok untuk promo per produk	Cocok untuk promo toko
-🧱 3. Manfaat Widget Stack untuk UI Kategori Menu
-
-Stack digunakan untuk membuat UI modern seperti:
-
-Background kategori
-
-Nama kategori
-
-Label promo
-
-Badge
-
-📌 Contoh
+🔍 Contoh Kode Widget Stack
 Stack(
   children: [
-    Image.asset("assets/foods.png"),
-    Positioned(bottom: 8, left: 10, child: Text("Makanan")),
-    Positioned(
-      top: 8,
-      right: 8,
-      child: Container(
-        padding: EdgeInsets.all(6),
-        decoration: BoxDecoration(
-          color: Colors.red,
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Text("Promo 20%", style: TextStyle(color: Colors.white)),
-      ),
+    Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Text("Makanan"),
+        Text("Minuman"),
+      ],
     ),
+    Positioned(
+      bottom: 0,
+      left: selectedIndex == 0 ? 40 : 160,
+      child: Container(
+        width: 80,
+        height: 4,
+        color: Colors.blue,
+      ),
+    )
   ],
-);
+)
 
-🛠 Teknologi yang Digunakan
+🛒 Komponen Utama Aplikasi Kasir
+No	Komponen	Deskripsi
+1	Menu Makanan & Minuman	Menampilkan daftar lengkap produk
+2	Keranjang Belanja	Item yang dipilih user
+3	Perhitungan Subtotal	Total harga sebelum diskon
+4	Diskon Per Item	Diskon berdasarkan item tertentu
+5	Diskon Total Transaksi	Diskon jika subtotal memenuhi syarat
+6	Cubit State Management	Mengatur seluruh perubahan data
+📦 Struktur Cubit
+class CartCubit extends Cubit<CartState> {
+  CartCubit() : super(CartState(cart: []));
 
-Flutter 3.x
+  void addItem(Item item) {
+    state.cart.add(item);
+    emit(CartState(cart: List.from(state.cart)));
+  }
 
-Dart
+  double get subtotal => state.cart.fold(0, (a, b) => a + b.finalPrice);
 
-Flutter Bloc (Cubit)
+  double get total {
+    if (subtotal > 100000) return subtotal * 0.9;
+    return subtotal;
+  }
+}
 
-Material Design
+🖼️ Screenshot Menu Makanan
 
-Widget: Stack, ListView, GridView, Card
+Tambahkan gambar (yang tadi kamu upload) dengan kode berikut:
 
-📁 Struktur Project (Rapi & Standar Flutter)
-lib/
-│
-├── main.dart
-│
-├── cubit/
-│   └── order_cubit.dart
-│
-├── models/
-│   └── menu_model.dart
-│
-├── pages/
-│   ├── home_page.dart
-│   ├── cart_page.dart
-│   ├── order_summary_page.dart
-│   └── category_page.dart
-│
-├── widgets/
-│   ├── menu_card.dart
-│   └── category_card.dart
-│
-└── utils/
-    └── format_currency.dart
+![Menu Makanan](/mnt/data/makanan.png)
 
-🎯 Kesimpulan
 
-Cubit sangat efektif mengelola diskon dan transaksi.
+Jika gambar sudah dipindahkan ke folder proyek GitHub:
 
-Diskon item & diskon total punya fungsi berbeda dan dapat digabung.
-
-Widget Stack membuat tampilan kategori lebih modern.
-
-Struktur project rapi dan mudah dikembangkan.
-
-Kalau kamu mau, aku bisa buatkan versi README dengan styling lebih profesional:
-
-✨ pakai banner
-✨ gradient header
-✨ badge GitHub
-✨ tombol demo
-✨ tabel fitur
-✨ screenshot grid layout
+![Menu Makanan](assets/images/makanan.png)
