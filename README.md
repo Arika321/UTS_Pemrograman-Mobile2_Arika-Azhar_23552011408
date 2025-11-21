@@ -17,45 +17,66 @@ For help getting started with Flutter development, view the
 samples, guidance on mobile development, and a full API reference.
 
 
-📌 Deskripsi Project
+)
 
-Aplikasi ini merupakan aplikasi kasir berbasis Flutter yang menggunakan State Management Cubit untuk mengelola:
+📱 UTS Pemrograman Mobile 2
+Aplikasi Kasir Flutter + Cubit — Sistem Diskon Dinamis
 
-menu makanan
+Nama: Arika Azhar
+NIM: 23552011408
 
-keranjang belanja
+🚀 Tentang Project
 
-harga
+Aplikasi ini merupakan aplikasi kasir sederhana berbasis Flutter dengan State Management Cubit untuk mengelola:
 
-diskon per item
+Menu makanan & minuman
 
-diskon total transaksi
+Keranjang belanja
 
-Project ini dibuat sebagai tugas UTS Pemrograman Mobile 2.
+Harga & quantity
 
-## 🧠 1. Manfaat Cubit dalam Logika Diskon Dinamis
+Diskon per item
 
-Cubit sangat membantu dalam aplikasi kasir karena transaksi memiliki data yang berubah-ubah: jumlah item, harga, diskon, dan total pembayaran.
+Diskon total transaksi
+
+Ringkasan transaksi
+
+Aplikasi ini dibuat sebagai tugas UTS Pemrograman Mobile 2.
+
+📸 Tampilan Aplikasi (Screenshots)
+🧾 Ringkasan Pesanan (Contoh 1)
+
+![ui1](/mnt/data/ringkasan pemesanan makanan.png)
+
+🧾 Ringkasan Pesanan (Contoh 2)
+
+![ui2](/mnt/data/ringkasan pemesanan.png)
+
+🍹 Menu Minuman
+
+🍛 Menu Makanan
+
+🧠 1. Manfaat Cubit dalam Logika Diskon Dinamis
+
+Cubit membantu mengelola data transaksi yang selalu berubah seperti:
+
+Qty item
+
+Harga setelah diskon
+
+Total transaksi
+
+Subtotal
 
 ✔ Konsistensi Data
 
-Semua perubahan seperti:
-
-menambah item
-
-mengurangi jumlah
-
-menghitung total harga
-
-menghitung diskon
-
-dilakukan di Cubit, sehingga UI otomatis update tanpa coding ulang di halaman.
+Semua perubahan dilakukan di Cubit → UI otomatis ter-update.
 
 ✔ Logika Diskon Terpusat
 
-Semua perhitungan disatukan sehingga kode bersih & aman dari bug.
+Tidak bercampur dengan UI → lebih bersih & minim bug.
 
-📌 Contoh Logika Diskon di Cubit
+📌 Contoh Logika Diskon Total
 int getTotalPrice() {
   int total = 0;
 
@@ -70,89 +91,51 @@ int getTotalPrice() {
   return total;
 }
 
-✔ Keuntungan Menggunakan Cubit
-
-Logika diskon tidak bercampur UI
-
-Risiko bug lebih kecil
-
-Struktur project lebih bersih
-
-Mengikuti prinsip Clean Architecture
-
-## 💸 2. Perbedaan Diskon Per Item & Diskon Total Transaksi
+💸 2. Perbedaan Diskon Per Item & Diskon Total
 ⭐ Diskon Per Item
 
-Diskon yang diterapkan ke setiap produk secara individual.
+Diterapkan pada produk tertentu.
 Contoh:
 
-Ayam Geprek diskon 10%
+Ayam Geprek → diskon 10%
 
-Es Teh potongan Rp 2.000
-
-Contoh kode:
+Es Teh → potongan Rp 2.000
 
 int getDiscountedPrice() {
   return price - discount;
 }
 
-⭐ Diskon Total Transaksi
+⭐ Diskon Total
 
-Diskon diberikan setelah total harga seluruh item dihitung.
+Diterapkan setelah subtotal dihitung.
 Contoh:
 
-Total belanja > 100.000 → diskon 10%
-
-Promo toko: diskon total 5%
-
 if (total > 100000) {
-  total = (total * 0.9).toInt();
+  total = (total * 0.9).toInt(); // Diskon 10%
 }
 
-📊 Ringkasan Perbedaan
+📊 Ringkasan
 Diskon Per Item	Diskon Total
-Berlaku per produk	Berlaku untuk seluruh belanja
-Dihitung sebelum total	Dihitung setelah total
-Cocok untuk promo menu	Cocok untuk promo toko
-Harga per item berubah	Total akhir berubah
-## 🧱 3. Manfaat Widget Stack untuk Tampilan Kategori Menu
+Berlaku per menu	Berlaku untuk seluruh belanja
+Diterapkan sebelum total	Setelah total
+Cocok untuk promo per produk	Cocok untuk promo toko
+🧱 3. Manfaat Widget Stack untuk UI Kategori Menu
 
-Widget Stack membuat UI terlihat profesional dan modern.
+Stack digunakan untuk membuat UI modern seperti:
 
-✔ Menumpuk Beberapa Elemen
+Background kategori
 
-Digunakan untuk:
+Nama kategori
 
-gambar background
+Label promo
 
-teks kategori
+Badge
 
-badge promo
-
-ikon overlay
-
-✔ Penempatan Lebih Fleksibel
-
-Dengan Positioned, elemen bisa ditempatkan di:
-
-kiri atas
-
-kanan bawah
-
-tengah overlay
-
-📌 Contoh Kode Stack
+📌 Contoh
 Stack(
   children: [
     Image.asset("assets/foods.png"),
-    Positioned(
-      bottom: 8,
-      left: 10,
-      child: Text(
-        "Makanan",
-        style: TextStyle(fontSize: 18, color: Colors.white),
-      ),
-    ),
+    Positioned(bottom: 8, left: 10, child: Text("Makanan")),
     Positioned(
       top: 8,
       right: 8,
@@ -168,7 +151,7 @@ Stack(
   ],
 );
 
-## 🛠 Teknologi yang Digunakan
+🛠 Teknologi yang Digunakan
 
 Flutter 3.x
 
@@ -176,11 +159,11 @@ Dart
 
 Flutter Bloc (Cubit)
 
-Material Design Components
+Material Design
 
-Widget: Stack, GridView, ListView, Card
+Widget: Stack, ListView, GridView, Card
 
-## 📁 Struktur Project (Rapi & Standar Flutter)
+📁 Struktur Project (Rapi & Standar Flutter)
 lib/
 │
 ├── main.dart
@@ -204,53 +187,21 @@ lib/
 └── utils/
     └── format_currency.dart
 
-## 📌 Penjelasan Setiap Folder
-📌 lib/main.dart
-
-Root aplikasi: inisialisasi Cubit + route utama.
-
-📦 cubit/
-
-Folder untuk semua state management:
-
-order_cubit.dart → menghitung total harga, diskon, qty, dll.
-
-📦 models/
-
-Berisi struktur data aplikasi:
-
-menu_model.dart → data menu + diskon item.
-
-📦 pages/
-
-Halaman tampilan aplikasi:
-
-home_page.dart
-
-cart_page.dart
-
-order_summary_page.dart
-
-category_page.dart
-
-📦 widgets/
-
-Widget kecil yang dapat digunakan kembali:
-
-menu_card.dart
-
-category_card.dart
-
-📦 utils/
-
-Helper function:
-
-format_currency.dart → ubah harga menjadi format Rupiah.
-
 🎯 Kesimpulan
 
-Cubit membuat pengelolaan transaksi & diskon menjadi lebih rapi, stabil, dan mudah dikembangkan.
+Cubit sangat efektif mengelola diskon dan transaksi.
 
-Diskon per item dan diskon total transaksi memiliki fungsi berbeda namun bisa dipakai bersamaan.
+Diskon item & diskon total punya fungsi berbeda dan dapat digabung.
 
-Widget Stack memberi tampilan kategori yang lebih modern dan informatif.
+Widget Stack membuat tampilan kategori lebih modern.
+
+Struktur project rapi dan mudah dikembangkan.
+
+Kalau kamu mau, aku bisa buatkan versi README dengan styling lebih profesional:
+
+✨ pakai banner
+✨ gradient header
+✨ badge GitHub
+✨ tombol demo
+✨ tabel fitur
+✨ screenshot grid layout
