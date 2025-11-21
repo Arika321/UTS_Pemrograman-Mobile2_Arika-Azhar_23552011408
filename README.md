@@ -57,11 +57,9 @@ int getTotalPrice() {
   return total;
 }
 
-
-
 ---
 
-### 💸 2. **Perbedaan Diskon: Per Item vs. Total Transaksi**
+### 💸 **2. **Perbedaan Diskon: Per Item vs. Total Transaksi****
 
 * Aplikasi ini mengimplementasikan dua jenis diskon yang dapat digabungkan, yang diatur secara terpusat oleh Cubit untuk konsistensi perhitungan.
 
