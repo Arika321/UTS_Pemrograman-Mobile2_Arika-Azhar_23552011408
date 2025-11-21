@@ -38,11 +38,12 @@ Setiap perubahan:
 - menghapus item  
 - menghitung ulang total  
 
-…semuanya dilakukan melalui Cubit sehingga state selalu akurat dan UI mengikuti secara otomatis.
+semuanya dilakukan melalui Cubit sehingga state selalu akurat dan UI mengikuti secara otomatis.
 
 ### ✔ Memusatkan Logika Diskon  
 Diskon dapat dihitung dengan mudah di dalam Cubit, contohnya:
 
+//
 ```dart
 int getTotalPrice() {
   int total = 0;
@@ -52,12 +53,14 @@ int getTotalPrice() {
   if (total > 100000) total = (total * 0.9).toInt();
   return total;
 }
-Cubit membuat logika diskon tidak bercampur dengan UI → lebih bersih dan mudah di-maintain.
 
-✔ Minim Bug
+//
+# Cubit membuat logika diskon tidak bercampur dengan UI → lebih bersih dan mudah di-maintain.
+
+# ✔ Minim Bug
 Karena semua perhitungan dilakukan di satu tempat, risiko salah total atau salah diskon sangat kecil.
 
-✔ Memisahkan Logika Bisnis & UI
+# ✔ Memisahkan Logika Bisnis & UI
 UI → hanya menampilkan data
 Cubit → menghitung dan mengelola transaksi
 
@@ -65,7 +68,7 @@ Ini adalah prinsip "clean architecture".
 
 //
 ###💸 2. Perbedaan Diskon Per Item dan Diskon Total Transaksi
-⭐ Diskon Per Item
+#⭐ Diskon Per Item
 Diskon diterapkan pada setiap produk secara individu.
 Contoh:
 
@@ -75,7 +78,7 @@ Es Teh potongan Rp 2.000
 
 Digunakan untuk promo per menu.
 
-⭐ Diskon Total Transaksi
+#⭐ Diskon Total Transaksi
 Diterapkan setelah total harga dihitung.
 Contoh:
 
