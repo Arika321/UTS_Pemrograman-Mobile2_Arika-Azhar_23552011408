@@ -169,25 +169,72 @@ Material Design
 
 Widget Flutter: Stack, GridView, ListView, Card
 
-## 📁 Struktur Project
+📁 Struktur Project (Versi Rapi & Standar Flutter)
 lib/
- ├── cubit/
- │    └── order_cubit.dart
- ├── models/
- │    └── menu_model.dart
- ├── pages/
- │    ├── home_page.dart
- │    ├── cart_page.dart
- │    ├── order_summary_page.dart
- │    └── category_stack_page.dart
- ├── widgets/
- │    └── menu_card.dart
- └── main.dart
+│
+├── main.dart
+│
+├── cubit/
+│   └── order_cubit.dart
+│
+├── models/
+│   └── menu_model.dart
+│
+├── pages/
+│   ├── home_page.dart
+│   ├── cart_page.dart
+│   ├── order_summary_page.dart
+│   └── category_page.dart
+│
+├── widgets/
+│   ├── menu_card.dart
+│   └── category_card.dart
+│
+└── utils/
+    └── format_currency.dart
 
-## 🚀 Cara Menjalankan Project
-flutter pub get
-flutter run
+📌 Penjelasan Singkat Tiap Folder
+📌 lib/main.dart
 
+Tempat root aplikasi, inisialisasi Cubit & route.
+
+📦 cubit/
+
+Tempat semua state management, misalnya:
+
+order_cubit.dart — mengatur keranjang, qty, harga, diskon.
+
+📦 models/
+
+Tempat semua data model, misalnya:
+
+menu_model.dart — struktur data menu + diskon item.
+
+📦 pages/
+
+Halaman utama aplikasi:
+
+home_page.dart → daftar menu
+
+cart_page.dart → keranjang
+
+order_summary_page.dart → ringkasan transaksi
+
+category_page.dart → tampilan kategori menggunakan Stack
+
+📦 widgets/
+
+Semua widget reusable:
+
+menu_card.dart → card menu
+
+category_card.dart → card kategori dengan Stack
+
+📦 utils/
+
+Helper / fungsi kecil:
+
+format_currency.dart → memformat harga ke bentuk Rupiah
 🎯 Kesimpulan
 
 Cubit membantu mengolah transaksi & diskon secara efisien dan rapi.
