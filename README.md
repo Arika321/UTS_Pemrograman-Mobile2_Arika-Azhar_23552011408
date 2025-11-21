@@ -1,5 +1,20 @@
 # uts_arika
 
+## Getting Started
+
+This project is a starting point for a Flutter application.
+
+A few resources to get you started if this is your first Flutter project:
+
+- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
+- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+
+For help getting started with Flutter development, view the
+[online documentation](https://docs.flutter.dev/), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.
+
+# uts_arika
+
 A new Flutter project.
 
 ## Getting Started
@@ -14,3 +29,145 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+
+# 📱 UTS Pemrograman Mobile 2  
+## Flutter + Cubit — Aplikasi Kasir & Sistem Diskon  
+*Nama:* Arika Azhar  
+*NIM:* 23552011408  
+
+---
+
+## 📌 Deskripsi Project  
+Project ini adalah aplikasi kasir berbasis Flutter yang menggunakan *State Management Cubit* untuk mengelola keranjang belanja, menu makanan, harga produk, dan sistem diskon dinamis.  
+Aplikasi ini dibuat sebagai tugas UTS Pemrograman Mobile 2.
+
+---
+
+## 🧠 1. Manfaat State Management Cubit dalam Logika Diskon Dinamis  
+
+State management menggunakan *Cubit* sangat berguna dalam aplikasi kasir karena mampu mengelola data transaksi yang cepat berubah, seperti jumlah item, total harga, hingga diskon.
+
+### ✔ Mengelola Data Secara Konsisten  
+Setiap perubahan:
+- menambah item  
+- mengurangi jumlah  
+- menghapus item  
+- menghitung ulang total  
+
+…semuanya dilakukan melalui Cubit sehingga state selalu akurat dan UI mengikuti secara otomatis.
+
+### ✔ Memusatkan Logika Diskon  
+Diskon dapat dihitung dengan mudah di dalam Cubit, contohnya:
+
+```dart
+int getTotalPrice() {
+  int total = 0;
+  for (var m in state) {
+    total += m.getDiscountedPrice() * m.qty;
+  }
+  if (total > 100000) total = (total * 0.9).toInt();
+  return total;
+}
+Cubit membuat logika diskon tidak bercampur dengan UI → lebih bersih dan mudah di-maintain.
+
+✔ Minim Bug
+Karena semua perhitungan dilakukan di satu tempat, risiko salah total atau salah diskon sangat kecil.
+
+✔ Memisahkan Logika Bisnis & UI
+UI → hanya menampilkan data
+Cubit → menghitung dan mengelola transaksi
+
+Ini adalah prinsip "clean architecture".
+
+💸 2. Perbedaan Diskon Per Item dan Diskon Total Transaksi
+⭐ Diskon Per Item
+Diskon diterapkan pada setiap produk secara individu.
+Contoh:
+
+Ayam Geprek diskon 10%
+
+Es Teh potongan Rp 2.000
+
+Digunakan untuk promo per menu.
+
+⭐ Diskon Total Transaksi
+Diterapkan setelah total harga dihitung.
+Contoh:
+
+Total pembelian > 100.000 → diskon 10%
+
+Promo akhir bulan: total diskon 5%
+
+📌 Ringkasan
+Diskon Per Item	Diskon Total
+Berlaku per menu	Berlaku untuk total keseluruhan
+Biasanya promo per produk	Promo global (per toko)
+Dihitung sebelum total	Dihitung setelah total
+
+Aplikasi kasir modern biasanya menggunakan keduanya sekaligus.
+
+🧱 3. Manfaat Widget Stack untuk Tampilan Kategori Menu
+Widget Stack digunakan untuk menumpuk beberapa elemen dalam satu area.
+
+✔ Elemen Bisa Ditumpuk
+Cocok untuk:
+
+Gambar background kategori
+
+Teks kategori
+
+Badge promo
+
+Indikator jumlah item
+
+✔ Penempatan Fleksibel
+Dengan Positioned, elemen bisa ditempatkan:
+
+kiri atas
+
+kanan bawah
+
+tengah overlay
+
+✔ Cocok untuk Notifikasi Kecil
+Seperti:
+
+Promo 20%
+
+Best Seller
+
+Stok habis
+
+✔ UI Lebih Menarik
+Stack memungkinkan tampilan bergaya kartu (card) seperti aplikasi komersial.
+
+🛠 Teknologi yang Digunakan
+Flutter 3.x
+
+Dart
+
+Flutter Bloc (Cubit)
+
+Material Design Components
+
+Widget Flutter: Stack, GridView, ListView, Card
+
+📁 Struktur Project
+css
+Copy code
+lib/
+ ├── cubit/
+ │    └── order_cubit.dart
+ │    └── category_cubit.dart
+
+ ├── models/
+ │    └── menu_model.dart
+ ├── pages/
+ │    ├── home_page.dart
+ │    └── cart_page.dart
+ │    └── category_stack_page.dart
+
+ ├── widgets/
+ │    └── menu_card.dart
+ └── main.dart
