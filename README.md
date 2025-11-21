@@ -55,6 +55,8 @@ int getTotalPrice() {
 }
 
 //
+##
+
 # Cubit membuat logika diskon tidak bercampur dengan UI → lebih bersih dan mudah di-maintain.
 
 # ✔ Minim Bug
@@ -66,8 +68,9 @@ Cubit → menghitung dan mengelola transaksi
 
 Ini adalah prinsip "clean architecture".
 
-//
-###💸 2. Perbedaan Diskon Per Item dan Diskon Total Transaksi
+
+## 💸 2. Perbedaan Diskon Per Item dan Diskon Total Transaksi D
+
 #⭐ Diskon Per Item
 Diskon diterapkan pada setiap produk secara individu.
 Contoh:
@@ -85,6 +88,68 @@ Contoh:
 Total pembelian > 100.000 → diskon 10%
 
 Promo akhir bulan: total diskon 5%
+
+## 🧱 3. Manfaat Widget Stack untuk Tampilan Kategori Menu
+
+Widget Stack digunakan untuk menumpuk beberapa elemen dalam satu area.
+
+✔ Elemen Bisa Ditumpuk
+Cocok untuk:
+
+Gambar background kategori
+
+Teks kategori
+
+Badge promo
+
+Indikator jumlah item
+
+✔ Penempatan Fleksibel
+Dengan Positioned, elemen bisa ditempatkan:
+
+kiri atas
+kanan bawah
+
+tengah overlay
+
+✔ Cocok untuk Notifikasi Kecil
+Seperti:
+
+Promo 20%
+
+Best Seller
+
+Stok habis
+
+✔ UI Lebih Menarik
+Stack memungkinkan tampilan bergaya kartu (card) seperti aplikasi komersial.
+
+🛠 Teknologi yang Digunakan
+Flutter 3.x
+
+Dart
+
+Flutter Bloc (Cubit)
+
+Material Design Components
+
+Widget Flutter: Stack, GridView, ListView, Card
+
+## 📁 Struktur Project
+css
+Copy code
+lib/
+ ├── cubit/
+ │    └── order_cubit.dart
+ ├── models/
+ │    └── menu_model.dart
+ ├── pages/
+ │    ├── home_page.dart
+ │    └── cart_page.dart
+ ├── widgets/
+ │    └── menu_card.dart
+ └── main.dart
+
 //
 ##📌 Ringkasan
 Diskon Per Item	Diskon Total
