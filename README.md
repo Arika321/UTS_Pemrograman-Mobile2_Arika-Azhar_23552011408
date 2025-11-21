@@ -27,104 +27,80 @@ For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
-## 🧠 1. Manfaat State Management Cubit dalam Logika Diskon Dinamis  
+## 🧠 1. Manfaat State Management Cubit dalam Logika Diskon Dinamis
 
-State management menggunakan *Cubit* sangat berguna dalam aplikasi kasir karena mampu mengelola data transaksi yang cepat berubah, seperti jumlah item, total harga, hingga diskon.
+Penggunaan Cubit sangat krusial dalam mengelola state transaksi dengan diskon dinamis karena:
 
-### ✔ Mengelola Data Secara Konsisten  
-Setiap perubahan:
-- menambah item  
-- mengurangi jumlah  
-- menghapus item  
-- menghitung ulang total  
+1.  **Pemisahan Logika & UI (Separation of Concerns):**
+    * Seluruh logika perhitungan diskon dan total berada di `CartCubit`.
+    * **UI** menjadi bersih dan hanya berfungsi menampilkan data.
+2.  **Integritas Data & Minim Bug:**
+    * Semua perhitungan dilakukan di satu tempat, mengurangi risiko salah total atau salah diskon.
+3.  **Konsistensi Realtime:**
+    * Setiap perubahan di keranjang akan memicu `emit` state baru, memastikan UI (seperti total harga) langsung berubah otomatis.
 
-semuanya dilakukan melalui Cubit sehingga state selalu akurat dan UI mengikuti secara otomatis.
+### Contoh Implementasi Diskon Total (dalam Cubit)
 
-### ✔ Memusatkan Logika Diskon  
-Diskon dapat dihitung dengan mudah di dalam Cubit, contohnya:
+Logika ini menghitung total harga setelah diskon per item diterapkan, kemudian menerapkan diskon total 10% jika total melebihi Rp 100.000.
 
-//
 ```dart
 int getTotalPrice() {
   int total = 0;
   for (var m in state) {
     total += m.getDiscountedPrice() * m.qty;
   }
+  // Diskon Total Transaksi 10%
   if (total > 100000) total = (total * 0.9).toInt();
   return total;
 }
 
-//
-##
 
-# Cubit membuat logika diskon tidak bercampur dengan UI → lebih bersih dan mudah di-maintain.
+## ** 💸 2. Perbedaan Diskon: Per Item vs. Total Transaksi **
+Aplikasi ini mengimplementasikan dua jenis diskon yang dapat digabungkan, yang diatur secara terpusat oleh Cubit untuk konsistensi perhitungan.
 
-# ✔ Minim Bug
-Karena semua perhitungan dilakukan di satu tempat, risiko salah total atau salah diskon sangat kecil.
+# *Jenis Diskon	Penjelasan Singkat	Digunakan Saat*
+⭐ Diskon Per Item	Diterapkan pada setiap produk secara individu (e.g., Ayam Geprek diskon 10% atau Es Teh potongan Rp 2.000).	Promo per menu atau per produk.
+⭐ Diskon Total Transaksi	Diterapkan setelah total harga subtotal dihitung (e.g., Total pembelian > Rp 100.000 → diskon 10%).	Promo global (per toko) atau diskon member.
 
-# ✔ Memisahkan Logika Bisnis & UI
-UI → hanya menampilkan data
-Cubit → menghitung dan mengelola transaksi
+Ekspor ke Spreadsheet
 
-Ini adalah prinsip "clean architecture".
+# * Ringkasan Perhitungan
+Fitur	Diskon Per Item	Diskon Total
+Berlaku untuk	Per menu/produk	Total keseluruhan belanja
+Waktu Hitung	Dihitung sebelum total	Dihitung setelah total
+
+Ekspor ke Spreadsheet
+
+## ** 🧱 3. Manfaat Widget Stack untuk Tampilan Kategori Menu ** 
+Widget Stack digunakan untuk menumpuk beberapa elemen dalam satu area, ideal untuk membuat tampilan kategori menu yang dinamis dan modern:
+
+Elemen Bisa Ditumpuk (Layering): Memungkinkan penumpukan Gambar background kategori, Teks kategori, Badge promo, atau Indikator jumlah item.
+
+UI Lebih Menarik: Cocok untuk menampilkan notifikasi kecil (Promo 20%, Best Seller) dan menciptakan tampilan card yang bergaya aplikasi komersial.
+
+Contoh Kode Widget Stack (Category Indicator)
+Stack memungkinkan pembuatan garis indikator aktif yang dapat bergerak di bawah teks kategori:
+
+Dart
+
+Stack(
+  children: [
+    Row( /* ... Baris Teks Kategori */ ),
+    Positioned(
+      bottom: 0,
+      left: selectedIndex == 0 ? 40 : 160, // Posisi dinamis berdasarkan index
+      child: Container(
+        width: 80,
+        height: 4,
+        color: Colors.blue, // Garis indikator
+      ),
+    )
+  ],
+)
 
 
-## 💸 2. Perbedaan Diskon Per Item dan Diskon Total Transaksi D
-
-#⭐ Diskon Per Item
-Diskon diterapkan pada setiap produk secara individu.
-Contoh:
-
-Ayam Geprek diskon 10%
-
-Es Teh potongan Rp 2.000
-
-Digunakan untuk promo per menu.
-
-#⭐ Diskon Total Transaksi
-Diterapkan setelah total harga dihitung.
-Contoh:
-
-Total pembelian > 100.000 → diskon 10%
-
-Promo akhir bulan: total diskon 5%
-
-## 🧱 3. Manfaat Widget Stack untuk Tampilan Kategori Menu
-
-Widget Stack digunakan untuk menumpuk beberapa elemen dalam satu area.
-
-✔ Elemen Bisa Ditumpuk
-Cocok untuk:
-
-Gambar background kategori
-
-Teks kategori
-
-Badge promo
-
-Indikator jumlah item
-
-✔ Penempatan Fleksibel
-Dengan Positioned, elemen bisa ditempatkan:
-
-kiri atas
-kanan bawah
-
-tengah overlay
-
-✔ Cocok untuk Notifikasi Kecil
-Seperti:
-
-Promo 20%
-
-Best Seller
-
-Stok habis
-
-✔ UI Lebih Menarik
-Stack memungkinkan tampilan bergaya kartu (card) seperti aplikasi komersial.
-
-🛠 Teknologi yang Digunakan
+## ** 🛠 Teknologi & Struktur Project **
+Teknologi yang Digunakan
 Flutter 3.x
 
 Dart
@@ -135,24 +111,22 @@ Material Design Components
 
 Widget Flutter: Stack, GridView, ListView, Card
 
-## 📁 Struktur Project
-css
-Copy code
-lib/
- ├── cubit/
- │    └── order_cubit.dart
- ├── models/
- │    └── menu_model.dart
- ├── pages/
- │    ├── home_page.dart
- │    └── cart_page.dart
- ├── widgets/
- │    └── menu_card.dart
- └── main.dart
+## **📁 Struktur Direktori **
+Struktur proyek ini mengikuti standar Flutter untuk memisahkan business logic dan data model dari User Interface.
 
-//
-##📌 Ringkasan
-Diskon Per Item	Diskon Total
-Berlaku per menu	Berlaku untuk total keseluruhan
-Biasanya promo per produk	Promo global (per toko)
-Dihitung sebelum total	Dihitung setelah total
+lib/
+├── main.dart
+├── cubit/
+│   └── order_cubit.dart    # Logic & State Management
+├── models/
+│   └── menu_model.dart     # Data Model
+├── pages/
+│   ├── home_page.dart
+│   └── cart_page.dart
+└── widgets/
+    └── menu_card.dart      # Reusable UI component
+🖼️ Screenshot Aplikasi
+Ganti placeholder path berikut dengan path yang benar di repositori GitHub Anda.
+
+Menu Makanan	Ringkasan Pesanan (Contoh 1)	Ringkasan Pesanan (Contoh 2)
+![Ringkasan Pesanan 1](/mnt/data/ringkasan pemesanan makanan.png)	![Ringkasan Pesanan 2](/mnt/data/ringkasan pemesanan.png)
