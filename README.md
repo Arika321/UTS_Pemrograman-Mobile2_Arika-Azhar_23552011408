@@ -4,20 +4,7 @@
 **NIM:** 23552011408  
 
 ---
-
-# 📘 Deskripsi Project
-
-Project ini adalah aplikasi **Kasir ** dengan **State Management Cubit (flutter_bloc)**.  
-Aplikasi ini memiliki fitur utama:
-
-- Menu makanan & minuman  
-- Keranjang belanja  
-- Perhitungan otomatis  
-- Diskon per item  
-- Diskon total transaksi  
-- UI realtime menggunakan Cubit  
-
-Tujuan project ini adalah menunjukkan bagaimana Cubit dapat mengelola data transaksi dengan **rapi, mudah dikembangkan, dan minim bug.**
+## LINK REKAMAN : https://drive.google.com/drive/folders/1fn-PsgphMEw2gHoYb2WW5r1luNkZw8a2?usp=drive_link
 
 ## *1. Jelaskan bagaimana state management dengan Cubit dapat membantu dalam pengelolaan transaksi yang memiliki logika diskon dinamis.
 
@@ -78,7 +65,7 @@ Diskon Per Item
 
 Diskon yang diberikan pada produk tertentu.
 
-## Ciri-ciri:
+* Ciri-ciri:
 
 diterapkan pada setiap item secara individual,
 
@@ -86,7 +73,7 @@ digunakan untuk promo barang tertentu,
 
 besarannya berbeda untuk tiap produk.
 
-## Contoh:
+* Contoh:
 Produk Jagung Manis mendapat diskon 10%.
 Harga asli Rp10.000 → setelah diskon menjadi Rp9.000.
 
@@ -97,13 +84,13 @@ Diskon Total Transaksi
 
 Diskon yang diberikan berdasarkan jumlah belanja keseluruhan.
 
-## Ciri-ciri:
+ *Ciri-ciri:
 
 berlaku untuk satu transaksi penuh,
 
 biasanya berdasarkan syarat minimal belanja atau promo hari tertentu.
 
-## Contoh:
+* Contoh:
 Total belanja Rp120.000 → memenuhi syarat diskon 10%.
 Total setelah diskon: Rp108.000.
 
