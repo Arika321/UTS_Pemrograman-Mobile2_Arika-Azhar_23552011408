@@ -19,65 +19,135 @@ Aplikasi ini memiliki fitur utama:
 
 Tujuan project ini adalah menunjukkan bagaimana Cubit dapat mengelola data transaksi dengan **rapi, mudah dikembangkan, dan minim bug.**
 
+## *1. Jelaskan bagaimana state management dengan Cubit dapat membantu dalam pengelolaan transaksi yang memiliki logika diskon dinamis.
 
-## * 1. Jelaskan bagaimana state management dengan Cubit dapat membantu dalam pengelolaan transaksi yang memiliki logika diskon dinamis.
-Cubit membantu mengelola transaksi dengan logika diskon dinamis karena:
+State management dengan Cubit sangat membantu dalam pengelolaan transaksi yang memiliki logika diskon dinamis karena:
 
-a. Memisahkan logika bisnis dari UI, sehingga perhitungan diskon, subtotal, dan total transaksi tidak tercampur dengan kode tampilan.
-b. Memungkinkan pembaruan state secara real-time. Saat quantity berubah, item ditambah/dihapus, atau persentase diskon diganti, Cubit langsung memancarkan state baru.
-c. State yang terstruktur memastikan setiap perubahan konsisten (misalnya total selalu dihitung ulang otomatis).
-d. Logika diskon lebih fleksibel, misalnya diskon musiman, diskon minimal pembelian, atau voucher.
-e. Mendukung reusability, sehingga logika diskon tidak perlu ditulis ulang pada banyak widget.
-f. Mengurangi potensi bug, karena seluruh perhitungan melalui satu sumber kebenaran (single source of truth).
+## a. Mengatur Perubahan Data Secara Real-Time
+
+Cubit memungkinkan UI langsung memperbarui tampilan setiap kali terjadi perubahan transaksi, seperti:
+
+menambah item,
+
+mengubah jumlah item,
+
+menghapus item.
+
+Semua perubahan memicu state baru sehingga logika diskon ikut ter-update otomatis tanpa perlu setState() berulang kali.
+
+## b. Logika Diskon Tersentralisasi
+
+Seluruh aturan diskon ditempatkan dalam satu tempat, misalnya pada OrderCubit.
+Keuntungannya:
+
+kode lebih rapi (separation of concern),
+
+aturan diskon mudah diubah,
+
+UI tidak berisi perhitungan logika sehingga lebih bersih.
+
+## c. Perhitungan Diskon Otomatis
+
+Cubit dapat menghitung secara otomatis:
+
+subtotal,
+
+diskon per item,
+
+diskon total transaksi,
+
+total akhir pembayaran.
+
+Perhitungan dilakukan setiap kali state berubah sehingga hasil selalu konsisten.
+
+## d. Menjamin Konsistensi Data (Single Source of Truth)
+
+Dengan Cubit, UI hanya membaca dari satu sumber data.
+Ini memastikan:
+
+tidak ada perbedaan antara data transaksi dan tampilan UI,
+
+risiko salah hitung diskon sangat kecil.
+
+Kesimpulan Singkat
+
+Cubit membuat pengelolaan transaksi dan perhitungan diskon dinamis menjadi otomatis, real-time, terpusat, dan konsisten, karena seluruh logika diproses di dalam Cubit.
+
+## *2. Apa perbedaan antara diskon per item dan diskon total transaksi? Berikan contoh penerapannya dalam aplikasi kasir.
+Diskon Per Item
+
+Diskon yang diberikan pada produk tertentu.
+
+## Ciri-ciri:
+
+diterapkan pada setiap item secara individual,
+
+digunakan untuk promo barang tertentu,
+
+besarannya berbeda untuk tiap produk.
+
+## Contoh:
+Produk Jagung Manis mendapat diskon 10%.
+Harga asli Rp10.000 → setelah diskon menjadi Rp9.000.
+
+Dalam aplikasi kasir:
+Perhitungan dilakukan saat item ditambahkan, misalnya melalui method getDiscountedPrice() pada MenuModel.
+
+Diskon Total Transaksi
+
+Diskon yang diberikan berdasarkan jumlah belanja keseluruhan.
+
+## Ciri-ciri:
+
+berlaku untuk satu transaksi penuh,
+
+biasanya berdasarkan syarat minimal belanja atau promo hari tertentu.
+
+## Contoh:
+Total belanja Rp120.000 → memenuhi syarat diskon 10%.
+Total setelah diskon: Rp108.000.
+
+Dalam aplikasi kasir:
+Dicek di dalam OrderCubit pada fungsi seperti calculateTotals().
+
+## Perbedaan Utama dalam Tabel
+Diskon Per Item	Diskon Total Transaksi
+Berlaku pada produk tertentu	Berlaku untuk semua item di keranjang
+Besaran diskon bisa berbeda per produk	Diskon hanya satu untuk keseluruhan transaksi
+Dihitung saat item dimasukkan	Dihitung setelah subtotal terbentuk
+Contoh: Buah diskon 20%	Contoh: Belanja > 100k dapat diskon 10%
 
 
-## Kesimpulan:
-Cubit memberikan alur terstruktur, reaktif, dan aman untuk mengelola transaksi dengan logika diskon dinamis.
+## *3. Jelaskan manfaat penggunaan widget Stack pada tampilan kategori menu di aplikasi Flutter.
 
+Widget Stack digunakan untuk menumpuk beberapa widget secara bebas dalam satu area.
+Dalam aplikasi kasir, Stack memberikan beberapa manfaat:
 
+## a. Tampilan Kategori Lebih Interaktif
 
-## *2. Apa perbedaan antara diskon per item dan diskon total transaksi? Berikan contohnya dalam aplikasi kasir.
-a. Diskon Per Item
-Diskon diterapkan pada setiap produk secara individual.
+Stack memudahkan menempatkan kategori (misalnya daftar tombol kategori) di atas konten menu.
+UI tetap terlihat rapi tanpa perlu halaman baru untuk setiap kategori.
 
+## b. Menambahkan Overlay Elemen UI
 
-## Karakteristik:
+Stack memungkinkan menempatkan elemen tambahan seperti:
 
-Besaran diskon berbeda per barang.
-Harga akhir = harga setelah diskon × quantity.
-Cocok untuk promo produk tertentu, misalnya:
-“Diskon 10% untuk semua minuman.”
-“Diskon Rp 5.000 per ayam goreng.”
-Contoh di aplikasi kasir:
+highlight kategori aktif,
 
-Saat item “Latte” dipilih, sistem otomatis mengurangi 10% dari harga aslinya.
-Jika quantity menjadi 3 pcs, diskon diterapkan untuk tiap item.
-b. Diskon Total Transaksi
-Diskon diterapkan pada total belanja, bukan per item.
+badge jumlah item,
 
-## Karakteristik:
+tombol filter di pojok,
 
-Pengaruhnya terlihat pada nilai “Total Belanja”.
-Cocok untuk promo umum, seperti:
-“Diskon 20% untuk total transaksi di atas Rp 200.000.”
-“Voucher potongan Rp 15.000.”
-Contoh di aplikasi kasir:
+background dekoratif.
 
-Setelah seluruh item masuk ke keranjang, total dihitung.
-Jika total mencapai Rp 200.000, otomatis diberi diskon 20%.
-Diskon hanya diberikan sekali, tidak per item.
-3. Jelaskan manfaat penggunaan widget Stack pada tampilan kategori menu di aplikasi Flutter.
-Widget Stack sangat berguna untuk tampilan yang memerlukan elemen bertumpuk (overlapping).
+Semua bisa diletakkan posisi bebas menggunakan Positioned().
 
-## Manfaat Stack:
-a. Dapat menempatkan beberapa elemen di atas satu sama lain, seperti gambar, teks, dan badge promo.
-b. Membuat UI kategori lebih menarik, misalnya teks kategori di atas gambar background.
-c. Mendukung penempatan elemen di posisi tertentu menggunakan Positioned (misalnya ikon di pojok).
-d. Fleksibel untuk membuat kartu kategori yang memakai bayangan, gradient overlay, atau kombinasi elemen dekoratif.
-e. Memudahkan menambahkan efek seperti blur, gradient, atau highlight.
+## c. Mempermudah Animasi dan Efek Visual
 
-## Contoh Penerapan:
-Kategori “Coffee” menampilkan gambar kopi sebagai background.
-Di atasnya terdapat overlay hitam transparan agar teks terbaca.
-Teks “Coffee” dan badge “Promo 20%” diposisikan menggunakan Positioned.
-Stack memudahkan pembuatan layout ini tanpa mempersulit struktur UI.
+Stack sangat cocok untuk:
+
+efek floating tabs,
+
+transisi kategori,
+
+elemen bergerak di atas konten utama.
