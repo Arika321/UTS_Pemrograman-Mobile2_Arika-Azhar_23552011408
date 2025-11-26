@@ -18,7 +18,7 @@ Aplikasi ini memiliki fitur utama:
 - UI realtime menggunakan Cubit  
 
 Tujuan project ini adalah menunjukkan bagaimana Cubit dapat mengelola data transaksi dengan **rapi, mudah dikembangkan, dan minim bug.**
-//
+
 
 ## * 1. Jelaskan bagaimana state management dengan Cubit dapat membantu dalam pengelolaan transaksi yang memiliki logika diskon dinamis.
 Cubit membantu mengelola transaksi dengan logika diskon dinamis karena:
@@ -30,12 +30,12 @@ d. Logika diskon lebih fleksibel, misalnya diskon musiman, diskon minimal pembel
 e. Mendukung reusability, sehingga logika diskon tidak perlu ditulis ulang pada banyak widget.
 f. Mengurangi potensi bug, karena seluruh perhitungan melalui satu sumber kebenaran (single source of truth).
 
-//
+
 ## Kesimpulan:
 Cubit memberikan alur terstruktur, reaktif, dan aman untuk mengelola transaksi dengan logika diskon dinamis.
 
 
-//
+
 ## *2. Apa perbedaan antara diskon per item dan diskon total transaksi? Berikan contohnya dalam aplikasi kasir.
 a. Diskon Per Item
 Diskon diterapkan pada setiap produk secara individual.
