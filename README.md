@@ -7,7 +7,7 @@
 
 # 📘 Deskripsi Project
 
-Project ini adalah aplikasi **Kasir Flutter** dengan **State Management Cubit (flutter_bloc)**.  
+Project ini adalah aplikasi **Kasir ** dengan **State Management Cubit (flutter_bloc)**.  
 Aplikasi ini memiliki fitur utama:
 
 - Menu makanan & minuman  
@@ -19,66 +19,63 @@ Aplikasi ini memiliki fitur utama:
 
 Tujuan project ini adalah menunjukkan bagaimana Cubit dapat mengelola data transaksi dengan **rapi, mudah dikembangkan, dan minim bug.**
 
----
+1. Jelaskan bagaimana state management dengan Cubit dapat membantu dalam pengelolaan transaksi yang memiliki logika diskon dinamis.
+Cubit membantu mengelola transaksi dengan logika diskon dinamis karena:
 
-# 🧠 1. Manfaat Cubit dalam Logika Diskon Dinamis
+a. Memisahkan logika bisnis dari UI, sehingga perhitungan diskon, subtotal, dan total transaksi tidak tercampur dengan kode tampilan.
+b. Memungkinkan pembaruan state secara real-time. Saat quantity berubah, item ditambah/dihapus, atau persentase diskon diganti, Cubit langsung memancarkan state baru.
+c. State yang terstruktur memastikan setiap perubahan konsisten (misalnya total selalu dihitung ulang otomatis).
+d. Logika diskon lebih fleksibel, misalnya diskon musiman, diskon minimal pembelian, atau voucher.
+e. Mendukung reusability, sehingga logika diskon tidak perlu ditulis ulang pada banyak widget.
+f. Mengurangi potensi bug, karena seluruh perhitungan melalui satu sumber kebenaran (single source of truth).
 
-## ✔ 1. Memisahkan Logika dan UI  
-Semua logika diskon & total tersimpan di CartCubit, sehingga UI tetap bersih.
+Kesimpulan:
+Cubit memberikan alur terstruktur, reaktif, dan aman untuk mengelola transaksi dengan logika diskon dinamis.
 
-## ✔ 2. Update Realtime  
-Cubit melakukan `emit()` state baru setiap ada perubahan sehingga UI otomatis ter-update.
+2. Apa perbedaan antara diskon per item dan diskon total transaksi? Berikan contohnya dalam aplikasi kasir.
+a. Diskon Per Item
+Diskon diterapkan pada setiap produk secara individual.
 
-## ✔ 3. Minim bug  
-Karena semua perhitungan dilakukan di satu tempat.
+Karakteristik:
 
----
+Besaran diskon berbeda per barang.
+Harga akhir = harga setelah diskon × quantity.
+Cocok untuk promo produk tertentu, misalnya:
+“Diskon 10% untuk semua minuman.”
+“Diskon Rp 5.000 per ayam goreng.”
+Contoh di aplikasi kasir:
 
-# 💸 2. Perbedaan Diskon Per Item dan Diskon Total
+Saat item “Latte” dipilih, sistem otomatis mengurangi 10% dari harga aslinya.
+Jika quantity menjadi 3 pcs, diskon diterapkan untuk tiap item.
+b. Diskon Total Transaksi
+Diskon diterapkan pada total belanja, bukan per item.
 
-## ⭐ Diskon Per Item
-- Diterapkan pada masing-masing menu  
-- Dihitung sebelum subtotal  
-- Contoh: Latte harga 20.000 diskon 10% → 18.000
+Karakteristik:
 
-## ⭐ Diskon Total Transaksi
-- Dihitung setelah subtotal  
-- Contoh: Jika total > 100.000 → diskon 10%
+Pengaruhnya terlihat pada nilai “Total Belanja”.
+Cocok untuk promo umum, seperti:
+“Diskon 20% untuk total transaksi di atas Rp 200.000.”
+“Voucher potongan Rp 15.000.”
+Contoh di aplikasi kasir:
 
----
+Setelah seluruh item masuk ke keranjang, total dihitung.
+Jika total mencapai Rp 200.000, otomatis diberi diskon 20%.
+Diskon hanya diberikan sekali, tidak per item.
+3. Jelaskan manfaat penggunaan widget Stack pada tampilan kategori menu di aplikasi Flutter.
+Widget Stack sangat berguna untuk tampilan yang memerlukan elemen bertumpuk (overlapping).
 
-# 🧱 3. Manfaat Widget Stack untuk Tampilan Kategori
+Manfaat Stack:
+a. Dapat menempatkan beberapa elemen di atas satu sama lain, seperti gambar, teks, dan badge promo.
+b. Membuat UI kategori lebih menarik, misalnya teks kategori di atas gambar background.
+c. Mendukung penempatan elemen di posisi tertentu menggunakan Positioned (misalnya ikon di pojok).
+d. Fleksibel untuk membuat kartu kategori yang memakai bayangan, gradient overlay, atau kombinasi elemen dekoratif.
+e. Memudahkan menambahkan efek seperti blur, gradient, atau highlight.
 
-Widget `Stack` digunakan untuk membuat tampilan kategori modern:
-
-- Layer teks + gambar  
-- Badge promo  
-- Indikator kategori aktif  
-
-Contoh penggunaan:
-
-```dart
-Stack(
-  children: [
-    Row(
-      children: [
-        Text("Coffee"),
-        SizedBox(width: 30),
-        Text("Foods"),
-      ],
-    ),
-    Positioned(
-      bottom: 0,
-      left: 40,
-      child: Container(
-        width: 60,
-        height: 4,
-        color: Colors.blue,
-      ),
-    )
-  ],
-)
-
+Contoh Penerapan:
+Kategori “Coffee” menampilkan gambar kopi sebagai background.
+Di atasnya terdapat overlay hitam transparan agar teks terbaca.
+Teks “Coffee” dan badge “Promo 20%” diposisikan menggunakan Positioned.
+Stack memudahkan pembuatan layout ini tanpa mempersulit struktur UI.
 ## ** 📦 4. Struktur Folder Project
 lib/
 │
