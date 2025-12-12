@@ -3,6 +3,8 @@
 **Nama:** Arika Azhar  
 **NIM:** 23552011408  
 
+link : https://drive.google.com/file/d/1zLBba_gZjJDnLV2_BfBhZNhn3cHtUJ3s/view?usp=sharinghttps://drive.google.com/file/d/1zLBba_gZjJDnLV2_BfBhZNhn3cHtUJ3s/view?usp=sharing
+
 ---
 
 ## *1. Jelaskan bagaimana state management dengan Cubit dapat membantu dalam pengelolaan transaksi yang memiliki logika diskon dinamis.
