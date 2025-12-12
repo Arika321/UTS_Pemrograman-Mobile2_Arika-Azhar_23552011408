@@ -4,7 +4,6 @@
 **NIM:** 23552011408  
 
 ---
-## LINK REKAMAN : https://drive.google.com/drive/folders/1fn-PsgphMEw2gHoYb2WW5r1luNkZw8a2?usp=drive_link
 
 ## *1. Jelaskan bagaimana state management dengan Cubit dapat membantu dalam pengelolaan transaksi yang memiliki logika diskon dinamis.
 
